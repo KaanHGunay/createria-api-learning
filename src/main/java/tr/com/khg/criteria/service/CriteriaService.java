@@ -23,4 +23,6 @@ public interface CriteriaService {
     String selectMultipleRoots();
 
     List<CarDTO> selectWithJoinQueries();
+
+    List<PersonDTO> selectWithParameters(String name);
 }

@@ -179,4 +179,20 @@ public class CriteriaServiceImpl implements CriteriaService {
 
         return result.stream().map(carMapper::toDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<PersonDTO> selectWithParameters(String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
+        Root<Person> root = criteriaQuery.from(Person.class);
+
+        ParameterExpression<String> parameter = criteriaBuilder.parameter(String.class);
+        criteriaQuery.where(criteriaBuilder.equal(root.get("name"), parameter));
+
+        TypedQuery<Person> query = entityManager.createQuery(criteriaQuery);
+        query.setParameter(parameter, name);
+        log.info(query.toString());
+
+        return query.getResultStream().map(personMapper::toDto).collect(Collectors.toList());
+    }
 }
