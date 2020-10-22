@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +32,6 @@ public class CriteriaServiceImpl implements CriteriaService {
         this.entityManager = entityManager;
         this.personMapper = personMapper;
     }
-
 
     @Override
     public List<PersonDTO> selectAll() {
@@ -58,6 +58,22 @@ public class CriteriaServiceImpl implements CriteriaService {
         criteriaQuery.where(criteriaBuilder.equal(root.get("name"), "Alaska"));
 
         TypedQuery<String> query = entityManager.createQuery(criteriaQuery);
+        log.info(query.toString());
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> selectMultipleAttributes() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Person> root = criteriaQuery.from(Person.class);
+
+        Path<Object> pathName = root.get("name");
+        Path<Object> pathSurname = root.get("surname");
+
+        criteriaQuery.select(criteriaBuilder.array(pathName, pathSurname));
+        TypedQuery<Object[]> query = entityManager.createQuery(criteriaQuery);
         log.info(query.toString());
 
         return query.getResultList();

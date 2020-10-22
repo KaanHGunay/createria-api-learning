@@ -28,6 +28,11 @@ public class CriteriaResource {
         return criteriaService.selectOneAttribute();
     }
 
+    @GetMapping("/criteria/multiple-attributes")
+    public List<Object[]> getMultipleAttributes() {
+        return criteriaService.selectMultipleAttributes();
+    }
+
     @GetMapping("/criteria/one")
     public PersonDTO getOne() {
         return criteriaService.selectOne();

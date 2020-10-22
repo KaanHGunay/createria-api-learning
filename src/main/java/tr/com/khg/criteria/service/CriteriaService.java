@@ -10,6 +10,8 @@ public interface CriteriaService {
 
     List<String> selectOneAttribute();
 
+    List<Object[]> selectMultipleAttributes();
+
     PersonDTO selectOne();
 
 }
