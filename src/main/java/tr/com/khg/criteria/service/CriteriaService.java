@@ -8,6 +8,8 @@ public interface CriteriaService {
 
     List<PersonDTO> selectAll();
 
+    List<String> selectOneAttribute();
+
     PersonDTO selectOne();
 
 }

@@ -49,6 +49,21 @@ public class CriteriaServiceImpl implements CriteriaService {
     }
 
     @Override
+    public List<String> selectOneAttribute() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<String> criteriaQuery = criteriaBuilder.createQuery(String.class);
+        Root<Person> root = criteriaQuery.from(Person.class);
+        criteriaQuery.select(root.get("name"));
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("name"), "Alaska"));
+
+        TypedQuery<String> query = entityManager.createQuery(criteriaQuery);
+        log.info(query.toString());
+
+        return query.getResultList();
+    }
+
+    @Override
     public PersonDTO selectOne() {
         return null;
     }

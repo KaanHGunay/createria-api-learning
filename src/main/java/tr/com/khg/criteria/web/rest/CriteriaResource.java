@@ -23,6 +23,11 @@ public class CriteriaResource {
         return criteriaService.selectAll();
     }
 
+    @GetMapping("/criteria/one-attribute")
+    public List<String> getAttribute() {
+        return criteriaService.selectOneAttribute();
+    }
+
     @GetMapping("/criteria/one")
     public PersonDTO getOne() {
         return criteriaService.selectOne();
