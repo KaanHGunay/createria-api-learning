@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tr.com.khg.criteria.domain.Person;
+import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
 import tr.com.khg.criteria.service.dto.PersonDTO;
 import tr.com.khg.criteria.service.mapper.PersonMapper;
@@ -90,6 +91,22 @@ public class CriteriaServiceImpl implements CriteriaService {
 
         criteriaQuery.multiselect(pathName, pathSurname);
         TypedQuery<Object[]> query = entityManager.createQuery(criteriaQuery);
+        log.info(query.toString());
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<PersonMultiAttributes> selectMultipleAttributesWithMapper() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<PersonMultiAttributes> criteriaQuery = criteriaBuilder.createQuery(PersonMultiAttributes.class);
+        Root<Person> root = criteriaQuery.from(Person.class);
+
+        Path<Object> pathName = root.get("name");
+        Path<Object> pathSurname = root.get("surname");
+
+        criteriaQuery.multiselect(pathName, pathSurname);
+        TypedQuery<PersonMultiAttributes> query = entityManager.createQuery(criteriaQuery);
         log.info(query.toString());
 
         return query.getResultList();

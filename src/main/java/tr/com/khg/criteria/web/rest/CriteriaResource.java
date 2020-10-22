@@ -3,6 +3,7 @@ package tr.com.khg.criteria.web.rest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
 import tr.com.khg.criteria.service.dto.PersonDTO;
 
@@ -36,6 +37,11 @@ public class CriteriaResource {
     @GetMapping("/criteria/multiple-attributes-other-way")
     public List<Object[]> getMultipleAttributesOtherWay() {
         return criteriaService.selectMultipleAttributesOtherWay();
+    }
+
+    @GetMapping("/criteria/multiple-attributes-with-mapper")
+    public List<PersonMultiAttributes> selectMultipleAttributesWithMapper() {
+        return criteriaService.selectMultipleAttributesWithMapper();
     }
 
     @GetMapping("/criteria/one")
