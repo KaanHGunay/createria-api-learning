@@ -8,7 +8,9 @@ import tr.com.khg.criteria.domain.Car;
 import tr.com.khg.criteria.domain.Person;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
+import tr.com.khg.criteria.service.dto.CarDTO;
 import tr.com.khg.criteria.service.dto.PersonDTO;
+import tr.com.khg.criteria.service.mapper.CarMapper;
 import tr.com.khg.criteria.service.mapper.PersonMapper;
 
 import javax.persistence.EntityManager;
@@ -28,9 +30,12 @@ public class CriteriaServiceImpl implements CriteriaService {
 
     private final PersonMapper personMapper;
 
-    public CriteriaServiceImpl(EntityManager entityManager, PersonMapper personMapper) {
+    private final CarMapper carMapper;
+
+    public CriteriaServiceImpl(EntityManager entityManager, PersonMapper personMapper, CarMapper carMapper) {
         this.entityManager = entityManager;
         this.personMapper = personMapper;
+        this.carMapper = carMapper;
     }
 
     @Override
@@ -152,5 +157,21 @@ public class CriteriaServiceImpl implements CriteriaService {
         List<Tuple> tuples = entityManager.createQuery(criteria).getResultList();
 
         return tuples.get(0).get(1).toString();
+    }
+
+    @Override
+    public List<CarDTO> selectWithJoinQueries() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Car> criteria = builder.createQuery(Car.class);
+
+        Root<Car> root = criteria.from(Car.class);
+        root.join("person");
+
+        criteria.where(builder.isNotNull(root.get("brand")));
+
+        TypedQuery<Car> query = entityManager.createQuery(criteria);
+        List<Car> result = query.getResultList();
+
+        return result.stream().map(carMapper::toDto).collect(Collectors.toList());
     }
 }

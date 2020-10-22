@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
+import tr.com.khg.criteria.service.dto.CarDTO;
 import tr.com.khg.criteria.service.dto.PersonDTO;
 
 import java.util.List;
@@ -49,8 +50,13 @@ public class CriteriaResource {
         return criteriaService.selectTupleCriteriaQueries();
     }
 
-    @GetMapping("/criteria/mutiple-roots")
+    @GetMapping("/criteria/multiple-roots")
     public String selectMultipleRoots() {
         return criteriaService.selectMultipleRoots();
+    }
+
+    @GetMapping("/criteria/join-queries")
+    public List<CarDTO> selectWithJoinQueries() {
+        return criteriaService.selectWithJoinQueries();
     }
 }
