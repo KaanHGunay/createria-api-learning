@@ -34,7 +34,7 @@ public class Car implements Serializable {
     @Column(name = "car_type")
     private CarTypes carType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = "cars", allowSetters = true)
     private Person person;
 

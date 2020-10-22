@@ -165,12 +165,17 @@ public class CriteriaServiceImpl implements CriteriaService {
         CriteriaQuery<Car> criteria = builder.createQuery(Car.class);
 
         Root<Car> root = criteria.from(Car.class);
-        root.join("person");
+        // root.join("person");
+        root.fetch("person"); // Lazy fetch olan attributes lerin override ederek eager yapma
 
         criteria.where(builder.isNotNull(root.get("brand")));
 
         TypedQuery<Car> query = entityManager.createQuery(criteria);
         List<Car> result = query.getResultList();
+
+        for (Car car: result) {
+            log.info(car.getPerson().getName());
+        }
 
         return result.stream().map(carMapper::toDto).collect(Collectors.toList());
     }
