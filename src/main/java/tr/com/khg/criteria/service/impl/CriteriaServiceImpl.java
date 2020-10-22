@@ -40,6 +40,8 @@ public class CriteriaServiceImpl implements CriteriaService {
         Root<Person> root = criteriaQuery.from(Person.class);
         criteriaQuery.select(root);
 
+        criteriaQuery.where(criteriaBuilder.equal(root.get("name"), "Alaska"));
+
         TypedQuery<Person> query = entityManager.createQuery(criteriaQuery);
         log.info(query.toString());
 
