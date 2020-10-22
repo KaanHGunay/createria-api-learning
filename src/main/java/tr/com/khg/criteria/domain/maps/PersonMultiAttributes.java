@@ -1,6 +1,8 @@
 package tr.com.khg.criteria.domain.maps;
 
-public class PersonMultiAttributes {
+import java.io.Serializable;
+
+public class PersonMultiAttributes implements Serializable {
 
     private String name;
 

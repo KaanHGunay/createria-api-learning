@@ -11,6 +11,7 @@ import tr.com.khg.criteria.service.dto.PersonDTO;
 import tr.com.khg.criteria.service.mapper.PersonMapper;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -110,5 +111,24 @@ public class CriteriaServiceImpl implements CriteriaService {
         log.info(query.toString());
 
         return query.getResultList();
+    }
+
+    @Override
+    public String selectTupleCriteriaQueries() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
+        Root<Person> root = criteriaQuery.from(Person.class);
+
+        Path<Object> pathName = root.get("name");
+        Path<Object> pathSurname = root.get("surname");
+        criteriaQuery.multiselect(pathName, pathSurname);
+
+        TypedQuery<Tuple> query = entityManager.createQuery(criteriaQuery);
+        log.info(query.toString());
+
+        // Tuple Serializable olmadığından rest dönüşü olmamakta
+        List<Tuple> tuples = query.getResultList();
+
+        return (String) tuples.get(0).get(pathName);
     }
 }

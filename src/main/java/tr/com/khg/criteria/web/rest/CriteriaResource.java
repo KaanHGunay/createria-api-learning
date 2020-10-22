@@ -43,4 +43,9 @@ public class CriteriaResource {
     public List<PersonMultiAttributes> selectMultipleAttributesWithMapper() {
         return criteriaService.selectMultipleAttributesWithMapper();
     }
+
+    @GetMapping("/criteria/tuple")
+    public String selectTupleCriteriaQueries() {
+        return criteriaService.selectTupleCriteriaQueries();
+    }
 }
