@@ -16,7 +16,4 @@ public interface CriteriaService {
     List<Object[]> selectMultipleAttributesOtherWay();
 
     List<PersonMultiAttributes> selectMultipleAttributesWithMapper();
-
-    PersonDTO selectOne();
-
 }

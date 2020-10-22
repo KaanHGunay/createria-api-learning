@@ -43,9 +43,4 @@ public class CriteriaResource {
     public List<PersonMultiAttributes> selectMultipleAttributesWithMapper() {
         return criteriaService.selectMultipleAttributesWithMapper();
     }
-
-    @GetMapping("/criteria/one")
-    public PersonDTO getOne() {
-        return criteriaService.selectOne();
-    }
 }

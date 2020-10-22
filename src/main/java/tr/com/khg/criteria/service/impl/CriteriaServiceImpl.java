@@ -111,9 +111,4 @@ public class CriteriaServiceImpl implements CriteriaService {
 
         return query.getResultList();
     }
-
-    @Override
-    public PersonDTO selectOne() {
-        return null;
-    }
 }
