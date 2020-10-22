@@ -25,4 +25,6 @@ public interface CriteriaService {
     List<CarDTO> selectWithJoinQueries();
 
     List<PersonDTO> selectWithParameters(String name);
+
+    Long selectUsingAggregateFunctions();
 }

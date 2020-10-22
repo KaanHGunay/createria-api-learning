@@ -65,4 +65,9 @@ public class CriteriaResource {
     public List<PersonDTO> selectWithParameters(@PathVariable String name) {
         return criteriaService.selectWithParameters(name);
     }
+
+    @GetMapping("/criteria/using-aggregate")
+    public Long selectUsingAggregateFunctions() {
+        return criteriaService.selectUsingAggregateFunctions();
+    }
 }

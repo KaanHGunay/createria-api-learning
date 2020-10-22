@@ -195,4 +195,17 @@ public class CriteriaServiceImpl implements CriteriaService {
 
         return query.getResultStream().map(personMapper::toDto).collect(Collectors.toList());
     }
+
+    @Override
+    public Long selectUsingAggregateFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Person> root = criteriaQuery.from(Person.class);
+
+        criteriaQuery.select(criteriaBuilder.count(root));
+            // count
+            // max
+        TypedQuery<Long> typedQuery = entityManager.createQuery(criteriaQuery);
+        return typedQuery.getSingleResult();
+    }
 }
