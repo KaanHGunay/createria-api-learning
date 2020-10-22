@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CriteriaService {
 
-    List<PersonDTO> a();
+    List<PersonDTO> selectAll();
+
+    PersonDTO selectOne();
 
 }

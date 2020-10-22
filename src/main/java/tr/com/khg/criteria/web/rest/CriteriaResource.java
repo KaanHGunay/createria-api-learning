@@ -18,8 +18,13 @@ public class CriteriaResource {
         this.criteriaService = criteriaService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/criteria/all")
     public List<PersonDTO> getAll() {
-        return criteriaService.a();
+        return criteriaService.selectAll();
+    }
+
+    @GetMapping("/criteria/one")
+    public PersonDTO getOne() {
+        return criteriaService.selectOne();
     }
 }

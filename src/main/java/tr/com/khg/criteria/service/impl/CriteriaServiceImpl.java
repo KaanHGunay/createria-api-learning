@@ -34,7 +34,7 @@ public class CriteriaServiceImpl implements CriteriaService {
 
 
     @Override
-    public List<PersonDTO> a() {
+    public List<PersonDTO> selectAll() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
         Root<Person> root = criteriaQuery.from(Person.class);
@@ -46,5 +46,10 @@ public class CriteriaServiceImpl implements CriteriaService {
         log.info(query.toString());
 
         return query.getResultStream().map(personMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public PersonDTO selectOne() {
+        return null;
     }
 }
