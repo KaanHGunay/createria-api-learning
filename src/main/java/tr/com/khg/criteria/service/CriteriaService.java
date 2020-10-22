@@ -3,7 +3,6 @@ package tr.com.khg.criteria.service;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.dto.PersonDTO;
 
-import javax.persistence.Tuple;
 import java.util.List;
 
 public interface CriteriaService {
@@ -19,4 +18,6 @@ public interface CriteriaService {
     List<PersonMultiAttributes> selectMultipleAttributesWithMapper();
 
     String selectTupleCriteriaQueries();
+
+    String selectMultipleRoots();
 }

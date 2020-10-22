@@ -1,7 +1,15 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "person",
+      "otherEntityName": "person",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "car"
+    }
+  ],
   "fields": [
     {
       "fieldName": "brand",
@@ -10,6 +18,11 @@
     {
       "fieldName": "year",
       "fieldType": "Integer"
+    },
+    {
+      "fieldName": "carType",
+      "fieldType": "CarTypes",
+      "fieldValues": "SUV,SPORT"
     }
   ],
   "changelogDate": "20201022071930",

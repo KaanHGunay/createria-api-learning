@@ -25,6 +25,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import tr.com.khg.criteria.domain.enumeration.CarTypes;
 /**
  * Integration tests for the {@link CarResource} REST controller.
  */
@@ -38,6 +39,9 @@ public class CarResourceIT {
 
     private static final Integer DEFAULT_YEAR = 1;
     private static final Integer UPDATED_YEAR = 2;
+
+    private static final CarTypes DEFAULT_CAR_TYPE = CarTypes.SUV;
+    private static final CarTypes UPDATED_CAR_TYPE = CarTypes.SPORT;
 
     @Autowired
     private CarRepository carRepository;
@@ -65,7 +69,8 @@ public class CarResourceIT {
     public static Car createEntity(EntityManager em) {
         Car car = new Car()
             .brand(DEFAULT_BRAND)
-            .year(DEFAULT_YEAR);
+            .year(DEFAULT_YEAR)
+            .carType(DEFAULT_CAR_TYPE);
         return car;
     }
     /**
@@ -77,7 +82,8 @@ public class CarResourceIT {
     public static Car createUpdatedEntity(EntityManager em) {
         Car car = new Car()
             .brand(UPDATED_BRAND)
-            .year(UPDATED_YEAR);
+            .year(UPDATED_YEAR)
+            .carType(UPDATED_CAR_TYPE);
         return car;
     }
 
@@ -103,6 +109,7 @@ public class CarResourceIT {
         Car testCar = carList.get(carList.size() - 1);
         assertThat(testCar.getBrand()).isEqualTo(DEFAULT_BRAND);
         assertThat(testCar.getYear()).isEqualTo(DEFAULT_YEAR);
+        assertThat(testCar.getCarType()).isEqualTo(DEFAULT_CAR_TYPE);
     }
 
     @Test
@@ -138,7 +145,8 @@ public class CarResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(car.getId().intValue())))
             .andExpect(jsonPath("$.[*].brand").value(hasItem(DEFAULT_BRAND)))
-            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)));
+            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
+            .andExpect(jsonPath("$.[*].carType").value(hasItem(DEFAULT_CAR_TYPE.toString())));
     }
     
     @Test
@@ -153,7 +161,8 @@ public class CarResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(car.getId().intValue()))
             .andExpect(jsonPath("$.brand").value(DEFAULT_BRAND))
-            .andExpect(jsonPath("$.year").value(DEFAULT_YEAR));
+            .andExpect(jsonPath("$.year").value(DEFAULT_YEAR))
+            .andExpect(jsonPath("$.carType").value(DEFAULT_CAR_TYPE.toString()));
     }
     @Test
     @Transactional
@@ -177,7 +186,8 @@ public class CarResourceIT {
         em.detach(updatedCar);
         updatedCar
             .brand(UPDATED_BRAND)
-            .year(UPDATED_YEAR);
+            .year(UPDATED_YEAR)
+            .carType(UPDATED_CAR_TYPE);
         CarDTO carDTO = carMapper.toDto(updatedCar);
 
         restCarMockMvc.perform(put("/api/cars").with(csrf())
@@ -191,6 +201,7 @@ public class CarResourceIT {
         Car testCar = carList.get(carList.size() - 1);
         assertThat(testCar.getBrand()).isEqualTo(UPDATED_BRAND);
         assertThat(testCar.getYear()).isEqualTo(UPDATED_YEAR);
+        assertThat(testCar.getCarType()).isEqualTo(UPDATED_CAR_TYPE);
     }
 
     @Test

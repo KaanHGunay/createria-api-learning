@@ -48,4 +48,9 @@ public class CriteriaResource {
     public String selectTupleCriteriaQueries() {
         return criteriaService.selectTupleCriteriaQueries();
     }
+
+    @GetMapping("/criteria/mutiple-roots")
+    public String selectMultipleRoots() {
+        return criteriaService.selectMultipleRoots();
+    }
 }

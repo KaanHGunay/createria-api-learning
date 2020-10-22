@@ -25,6 +25,8 @@
                     <th scope="col" ><span>ID</span></th>
                     <th scope="col" ><span>Brand</span></th>
                     <th scope="col" ><span>Year</span></th>
+                    <th scope="col" ><span>Car Type</span></th>
+                    <th scope="col" ><span>Person</span></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -33,6 +35,12 @@
                     <td><a [routerLink]="['/car', car.id, 'view']">{{ car.id }}</a></td>
                     <td>{{ car.brand }}</td>
                     <td>{{ car.year }}</td>
+                    <td>{{ car.carType }}</td>
+                    <td>
+                        <div *ngIf="car.personId">
+                            <a [routerLink]="['/person', car.personId , 'view']" >{{ car.personId }}</a>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

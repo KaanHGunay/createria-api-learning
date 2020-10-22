@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tr.com.khg.criteria.domain.Car;
 import tr.com.khg.criteria.domain.Person;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
@@ -13,10 +14,7 @@ import tr.com.khg.criteria.service.mapper.PersonMapper;
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -130,5 +128,29 @@ public class CriteriaServiceImpl implements CriteriaService {
         List<Tuple> tuples = query.getResultList();
 
         return (String) tuples.get(0).get(pathName);
+    }
+
+    @Override
+    public String selectMultipleRoots() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteria = builder.createTupleQuery();
+
+        Root<Person> personRoot = criteria.from(Person.class);
+        Root<Car> carRoot = criteria.from(Car.class);
+
+        criteria.multiselect(personRoot, carRoot);
+
+        Predicate personPredicate = builder.and(
+            builder.equal(personRoot.get("name"), "Kaan"),
+            builder.equal(personRoot.get("surname"), "Günay")
+        );
+
+        Predicate carPredicate = builder.equal(carRoot.get("brand"), "Ford");
+
+        criteria.where(builder.and(personPredicate, carPredicate));
+
+        List<Tuple> tuples = entityManager.createQuery(criteria).getResultList();
+
+        return tuples.get(0).get(1).toString();
     }
 }

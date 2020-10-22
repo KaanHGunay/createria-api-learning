@@ -2,6 +2,7 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CarService } from 'app/entities/car/car.service';
 import { ICar, Car } from 'app/shared/model/car.model';
+import { CarTypes } from 'app/shared/model/enumerations/car-types.model';
 
 describe('Service Tests', () => {
   describe('Car Service', () => {
@@ -20,7 +21,7 @@ describe('Service Tests', () => {
       service = injector.get(CarService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Car(0, 'AAAAAAA', 0);
+      elemDefault = new Car(0, 'AAAAAAA', 0, CarTypes.SUV);
     });
 
     describe('Service methods', () => {
@@ -56,6 +57,7 @@ describe('Service Tests', () => {
           {
             brand: 'BBBBBB',
             year: 1,
+            carType: 'BBBBBB',
           },
           elemDefault
         );
@@ -74,6 +76,7 @@ describe('Service Tests', () => {
           {
             brand: 'BBBBBB',
             year: 1,
+            carType: 'BBBBBB',
           },
           elemDefault
         );

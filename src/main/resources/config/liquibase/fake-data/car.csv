@@ -1,11 +1,11 @@
-id;brand;year
-1;San Marino model Games;50633
-2;Intranet facilitate;96409
-3;Arizona;26891
-4;magenta cross-media;18648
-5;Profit-focused Haiti;18519
-6;Right-sized;61269
-7;Park;52342
-8;calculate parse Small;48474
-9;Forward Front-line non-volatile;26525
-10;Operations;32403
+id;brand;year;car_type;person_id
+1;Ford;2015;SPORT;1
+2;Mercedes;2020;SUV;1
+3;Ford;18519;SPORT;1
+4;Park;52342;SUV;1
+5;Forward Front-line non-volatile;26525;SUV;1
+6;parsing;63743;SUV;1
+7;Sleek;76608;SPORT;1
+8;salmon orchestrate;61595;SPORT;1
+9;virtual invoice;51337;SUV;1
+10;algorithm;67426;SUV;1

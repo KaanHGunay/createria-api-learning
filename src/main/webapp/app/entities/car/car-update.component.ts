@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 
 import { ICar, Car } from 'app/shared/model/car.model';
 import { CarService } from './car.service';
+import { IPerson } from 'app/shared/model/person.model';
+import { PersonService } from 'app/entities/person/person.service';
 
 @Component({
   selector: 'jhi-car-update',
@@ -14,18 +16,28 @@ import { CarService } from './car.service';
 })
 export class CarUpdateComponent implements OnInit {
   isSaving = false;
+  people: IPerson[] = [];
 
   editForm = this.fb.group({
     id: [],
     brand: [],
     year: [],
+    carType: [],
+    personId: [],
   });
 
-  constructor(protected carService: CarService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected carService: CarService,
+    protected personService: PersonService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ car }) => {
       this.updateForm(car);
+
+      this.personService.query().subscribe((res: HttpResponse<IPerson[]>) => (this.people = res.body || []));
     });
   }
 
@@ -34,6 +46,8 @@ export class CarUpdateComponent implements OnInit {
       id: car.id,
       brand: car.brand,
       year: car.year,
+      carType: car.carType,
+      personId: car.personId,
     });
   }
 
@@ -57,6 +71,8 @@ export class CarUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       brand: this.editForm.get(['brand'])!.value,
       year: this.editForm.get(['year'])!.value,
+      carType: this.editForm.get(['carType'])!.value,
+      personId: this.editForm.get(['personId'])!.value,
     };
   }
 
@@ -74,5 +90,9 @@ export class CarUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IPerson): any {
+    return item.id;
   }
 }

@@ -1,6 +1,7 @@
 package tr.com.khg.criteria.service.dto;
 
 import java.io.Serializable;
+import tr.com.khg.criteria.domain.enumeration.CarTypes;
 
 /**
  * A DTO for the {@link tr.com.khg.criteria.domain.Car} entity.
@@ -13,6 +14,10 @@ public class CarDTO implements Serializable {
 
     private Integer year;
 
+    private CarTypes carType;
+
+
+    private Long personId;
     
     public Long getId() {
         return id;
@@ -36,6 +41,22 @@ public class CarDTO implements Serializable {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public CarTypes getCarType() {
+        return carType;
+    }
+
+    public void setCarType(CarTypes carType) {
+        this.carType = carType;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     @Override
@@ -62,6 +83,8 @@ public class CarDTO implements Serializable {
             "id=" + getId() +
             ", brand='" + getBrand() + "'" +
             ", year=" + getYear() +
+            ", carType='" + getCarType() + "'" +
+            ", personId=" + getPersonId() +
             "}";
     }
 }

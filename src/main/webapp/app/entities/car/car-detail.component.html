@@ -16,6 +16,16 @@
                 <dd>
                     <span>{{ car.year }}</span>
                 </dd>
+                <dt><span>Car Type</span></dt>
+                <dd>
+                    <span>{{ car.carType }}</span>
+                </dd>
+                <dt><span>Person</span></dt>
+                <dd>
+                    <div *ngIf="car.personId">
+                        <a [routerLink]="['/person', car.personId, 'view']">{{ car.personId }}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

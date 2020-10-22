@@ -29,7 +29,7 @@ public class Person implements Serializable {
     @Column(name = "surname")
     private String surname;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Car> cars = new HashSet<>();
 
