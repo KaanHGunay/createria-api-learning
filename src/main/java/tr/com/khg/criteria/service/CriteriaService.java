@@ -12,6 +12,8 @@ public interface CriteriaService {
 
     List<Object[]> selectMultipleAttributes();
 
+    List<Object[]> selectMultipleAttributesOtherWay();
+
     PersonDTO selectOne();
 
 }

@@ -33,6 +33,11 @@ public class CriteriaResource {
         return criteriaService.selectMultipleAttributes();
     }
 
+    @GetMapping("/criteria/multiple-attributes-other-way")
+    public List<Object[]> getMultipleAttributesOtherWay() {
+        return criteriaService.selectMultipleAttributesOtherWay();
+    }
+
     @GetMapping("/criteria/one")
     public PersonDTO getOne() {
         return criteriaService.selectOne();

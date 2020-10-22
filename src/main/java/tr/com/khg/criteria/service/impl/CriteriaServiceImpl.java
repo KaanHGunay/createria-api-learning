@@ -80,6 +80,22 @@ public class CriteriaServiceImpl implements CriteriaService {
     }
 
     @Override
+    public List<Object[]> selectMultipleAttributesOtherWay() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Person> root = criteriaQuery.from(Person.class);
+
+        Path<Object> pathName = root.get("name");
+        Path<Object> pathSurname = root.get("surname");
+
+        criteriaQuery.multiselect(pathName, pathSurname);
+        TypedQuery<Object[]> query = entityManager.createQuery(criteriaQuery);
+        log.info(query.toString());
+
+        return query.getResultList();
+    }
+
+    @Override
     public PersonDTO selectOne() {
         return null;
     }
