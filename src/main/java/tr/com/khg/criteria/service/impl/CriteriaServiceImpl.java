@@ -207,6 +207,7 @@ public class CriteriaServiceImpl implements CriteriaService {
             // count
             // max
         TypedQuery<Long> typedQuery = entityManager.createQuery(criteriaQuery);
+        log.info(typedQuery.toString());
         return typedQuery.getSingleResult();
     }
 
@@ -225,6 +226,31 @@ public class CriteriaServiceImpl implements CriteriaService {
         carStatisticCriteriaQuery.select(
             criteriaBuilder.construct(CarStatistic.class, totalCar, totalDistinctCar, maxYear, avgYear, sumOfYears));
 
-        return entityManager.createQuery(carStatisticCriteriaQuery).getSingleResult();
+        TypedQuery<CarStatistic> query = entityManager.createQuery(carStatisticCriteriaQuery);
+        log.info(query.toString());
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public List<Object[]> selectFromAndJoin() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Car> carRoot = criteriaQuery.from(Car.class);
+        Root<Person> personRoot = criteriaQuery.from(Person.class);
+
+        criteriaQuery.multiselect(carRoot, personRoot);
+
+        criteriaQuery.where(criteriaBuilder.equal(carRoot.get("person"), personRoot.get("id")));
+
+        Path<Object> brand = carRoot.get("brand");
+        Path<Object> name = personRoot.get("name");
+
+        criteriaQuery.select(criteriaBuilder.array(brand, name));
+
+        TypedQuery<Object[]> query = entityManager.createQuery(criteriaQuery);
+        log.info(query.toString());
+
+        return query.getResultList();
     }
 }

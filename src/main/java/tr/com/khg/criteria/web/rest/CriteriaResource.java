@@ -76,4 +76,9 @@ public class CriteriaResource {
     public CarStatistic selectUsingAggregateFunctionsWithMapping() {
         return criteriaService.selectUsingAggregateFunctionsWithMapping();
     }
+
+    @GetMapping("/criteria/using-aggregate-mapping-and-join")
+    public List<Object[]> selectFromAndJoin() {
+        return criteriaService.selectFromAndJoin();
+    }
 }

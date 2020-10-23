@@ -30,4 +30,6 @@ public interface CriteriaService {
     Long selectUsingAggregateFunctions();
 
     CarStatistic selectUsingAggregateFunctionsWithMapping();
+
+    List<Object[]> selectFromAndJoin();
 }
