@@ -272,4 +272,24 @@ public class CriteriaServiceImpl implements CriteriaService {
 
         return query.getResultList();
     }
+
+    @Override
+    public List<Object[]> selectOderBy() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Car> root = criteriaQuery.from(Car.class);
+        Path<Object> brand = root.get("brand");
+
+        criteriaQuery.multiselect( brand,
+            criteriaBuilder.count(root), criteriaBuilder.countDistinct(root), criteriaBuilder.max(root.get("year")));
+
+        criteriaQuery.groupBy(root.get("brand"));
+        criteriaQuery.having(criteriaBuilder.greaterThan(criteriaBuilder.sum(root.get("year")), 1));
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("brand")));
+
+        TypedQuery<Object[]> query = entityManager.createQuery(criteriaQuery);
+        log.info(query.toString());
+
+        return query.getResultList();
+    }
 }

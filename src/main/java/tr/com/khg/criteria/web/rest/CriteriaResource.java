@@ -86,4 +86,9 @@ public class CriteriaResource {
     public List<Object[]> selectGroupByAndHaving() {
         return criteriaService.selectGroupByAndHaving();
     }
+
+    @GetMapping("/criteria/order-by")
+    public List<Object[]> selectOderBy() {
+        return criteriaService.selectOderBy();
+    }
 }

@@ -34,4 +34,6 @@ public interface CriteriaService {
     List<Object[]> selectFromAndJoin();
 
     List<Object[]> selectGroupByAndHaving();
+
+    List<Object[]> selectOderBy();
 }
