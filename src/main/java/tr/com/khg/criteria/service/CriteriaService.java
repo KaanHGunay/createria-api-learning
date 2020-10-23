@@ -1,5 +1,6 @@
 package tr.com.khg.criteria.service;
 
+import tr.com.khg.criteria.domain.CarStatistic;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.dto.CarDTO;
 import tr.com.khg.criteria.service.dto.PersonDTO;
@@ -27,4 +28,6 @@ public interface CriteriaService {
     List<PersonDTO> selectWithParameters(String name);
 
     Long selectUsingAggregateFunctions();
+
+    CarStatistic selectUsingAggregateFunctionsWithMapping();
 }

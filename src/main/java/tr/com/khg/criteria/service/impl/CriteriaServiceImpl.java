@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tr.com.khg.criteria.domain.Car;
+import tr.com.khg.criteria.domain.CarStatistic;
 import tr.com.khg.criteria.domain.Person;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
@@ -207,5 +208,23 @@ public class CriteriaServiceImpl implements CriteriaService {
             // max
         TypedQuery<Long> typedQuery = entityManager.createQuery(criteriaQuery);
         return typedQuery.getSingleResult();
+    }
+
+    @Override
+    public CarStatistic selectUsingAggregateFunctionsWithMapping() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CarStatistic> carStatisticCriteriaQuery = criteriaBuilder.createQuery(CarStatistic.class);
+        Root<Car> root = carStatisticCriteriaQuery.from(Car.class);
+
+        Expression<Long> totalCar = criteriaBuilder.count(root);
+        Expression<Long> totalDistinctCar = criteriaBuilder.countDistinct(root);
+        Expression<Number> maxYear = criteriaBuilder.max(root.get("year"));
+        Expression<Double> avgYear = criteriaBuilder.avg(root.get("year"));
+        Expression<Number> sumOfYears = criteriaBuilder.sum(root.get("year"));
+
+        carStatisticCriteriaQuery.select(
+            criteriaBuilder.construct(CarStatistic.class, totalCar, totalDistinctCar, maxYear, avgYear, sumOfYears));
+
+        return entityManager.createQuery(carStatisticCriteriaQuery).getSingleResult();
     }
 }

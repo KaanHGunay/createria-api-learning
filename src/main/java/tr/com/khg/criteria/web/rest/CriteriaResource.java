@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tr.com.khg.criteria.domain.CarStatistic;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
 import tr.com.khg.criteria.service.dto.CarDTO;
@@ -69,5 +70,10 @@ public class CriteriaResource {
     @GetMapping("/criteria/using-aggregate")
     public Long selectUsingAggregateFunctions() {
         return criteriaService.selectUsingAggregateFunctions();
+    }
+
+    @GetMapping("/criteria/using-aggregate-mapping")
+    public CarStatistic selectUsingAggregateFunctionsWithMapping() {
+        return criteriaService.selectUsingAggregateFunctionsWithMapping();
     }
 }
