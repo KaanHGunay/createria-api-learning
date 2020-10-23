@@ -81,4 +81,9 @@ public class CriteriaResource {
     public List<Object[]> selectFromAndJoin() {
         return criteriaService.selectFromAndJoin();
     }
+
+    @GetMapping("/criteria/group-by-having")
+    public List<Object[]> selectGroupByAndHaving() {
+        return criteriaService.selectGroupByAndHaving();
+    }
 }

@@ -32,4 +32,6 @@ public interface CriteriaService {
     CarStatistic selectUsingAggregateFunctionsWithMapping();
 
     List<Object[]> selectFromAndJoin();
+
+    List<Object[]> selectGroupByAndHaving();
 }
