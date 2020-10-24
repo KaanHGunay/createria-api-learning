@@ -1,10 +1,13 @@
 package tr.com.khg.criteria.web.rest;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tr.com.khg.criteria.domain.Car;
 import tr.com.khg.criteria.domain.CarStatistic;
+import tr.com.khg.criteria.domain.Person;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
 import tr.com.khg.criteria.service.dto.CarDTO;
@@ -90,5 +93,20 @@ public class CriteriaResource {
     @GetMapping("/criteria/order-by")
     public List<Object[]> selectOderBy() {
         return criteriaService.selectOderBy();
+    }
+
+    @GetMapping("/criteria/test")
+    public List<Object[]> getTest() {
+        return criteriaService.getRowNumAndData();
+    }
+
+    @GetMapping("/criteria/get")
+    public List<?> get() {
+        return criteriaService.getA();
+    }
+
+    @GetMapping("/criteria/page")
+    public Page<Car> getPage() {
+        return criteriaService.getPage();
     }
 }

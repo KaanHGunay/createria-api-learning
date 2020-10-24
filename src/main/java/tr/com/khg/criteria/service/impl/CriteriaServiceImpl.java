@@ -2,13 +2,15 @@ package tr.com.khg.criteria.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tr.com.khg.criteria.domain.Car;
-import tr.com.khg.criteria.domain.CarStatistic;
-import tr.com.khg.criteria.domain.Person;
+import tr.com.khg.criteria.domain.*;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.CriteriaService;
+import tr.com.khg.criteria.service.JpaEntityQueryBuilder;
 import tr.com.khg.criteria.service.dto.CarDTO;
 import tr.com.khg.criteria.service.dto.PersonDTO;
 import tr.com.khg.criteria.service.mapper.CarMapper;
@@ -18,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -291,5 +294,59 @@ public class CriteriaServiceImpl implements CriteriaService {
         log.info(query.toString());
 
         return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> getRowNumAndData() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = builder.createQuery(Object[].class);
+
+        Root<Car> carRoot = query.from(Car.class);
+        Root<Person> personRoot = query.from(Person.class);
+
+        query.multiselect(
+            personRoot.get("name"),
+            personRoot.get("surname"),
+            carRoot.get("brand")
+        );
+
+        query.where(
+            builder.equal(personRoot.get("id"), carRoot.get("person"))
+        );
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(0).setMaxResults(5);
+        List<Object[]> resultList = typedQuery.getResultList();
+        log.info(String.valueOf(resultList.size()));
+        return resultList;
+    }
+
+    @Override
+    public Long get() {
+        return JpaEntityQueryBuilder.initialize(entityManager, Car.class)
+            .innerJoin("person")
+            .count();
+    }
+
+    public List<?> getA() {
+
+        List<String> a = new ArrayList<>();
+        a.add("Kaan");
+
+        return JpaEntityQueryBuilder.initialize(entityManager, Car.class)
+            .innerJoin("person")
+            .in("person.name", a)
+            .list();
+    }
+
+    @Override
+    public Page<Car> getPage() {
+        List<String> a = new ArrayList<>();
+        a.add("Kaan");
+
+        return JpaEntityQueryBuilder.initialize(entityManager, Car.class)
+            .innerJoin("person")
+            .in("person.name", a)
+            .page(PageRequest.of(1, 2));
     }
 }

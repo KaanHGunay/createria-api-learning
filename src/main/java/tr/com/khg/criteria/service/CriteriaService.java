@@ -1,6 +1,9 @@
 package tr.com.khg.criteria.service;
 
+import org.springframework.data.domain.Page;
+import tr.com.khg.criteria.domain.Car;
 import tr.com.khg.criteria.domain.CarStatistic;
+import tr.com.khg.criteria.domain.Person;
 import tr.com.khg.criteria.domain.maps.PersonMultiAttributes;
 import tr.com.khg.criteria.service.dto.CarDTO;
 import tr.com.khg.criteria.service.dto.PersonDTO;
@@ -36,4 +39,12 @@ public interface CriteriaService {
     List<Object[]> selectGroupByAndHaving();
 
     List<Object[]> selectOderBy();
+
+    List<Object[]> getRowNumAndData();
+
+    Long get();
+
+    List<?> getA();
+
+    Page<Car> getPage();
 }
