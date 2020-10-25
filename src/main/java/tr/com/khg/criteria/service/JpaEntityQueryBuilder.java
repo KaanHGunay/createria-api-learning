@@ -184,6 +184,18 @@ public class JpaEntityQueryBuilder<E> {
         return this;
     }
 
+    public JpaEntityQueryBuilder<E> select(List<String> paths) {
+
+        List<Selection<?>> selections = new ArrayList<>();
+
+        for (String path: paths) {
+            selections.add(toJpaPath(path));
+        }
+
+        criteriaQuery.multiselect(selections);
+        return this;
+    }
+
     public JpaEntityQueryBuilder<E> lessThanOrEqualsTo(String path, Comparable comparable) {
         if (Objects.nonNull(comparable)) {
             predicates.add(criteriaBuilder.lessThanOrEqualTo(toJpaPath(path), comparable));

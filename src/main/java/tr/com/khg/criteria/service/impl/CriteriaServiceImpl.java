@@ -344,9 +344,14 @@ public class CriteriaServiceImpl implements CriteriaService {
         List<String> a = new ArrayList<>();
         a.add("Kaan");
 
+        List<String> b = new ArrayList<>();
+        b.add("brand");
+
         return JpaEntityQueryBuilder.initialize(entityManager, Car.class)
+
             .innerJoin("person")
             .in("person.name", a)
+            .select(b)
             .page(PageRequest.of(1, 2));
     }
 }
